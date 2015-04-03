@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <packagegui>
-  <name>DShield Sensor Settings</name>
+  <name>DShield Sensor</name>
   <version>2015-03-31 pkg 0.9.0</version>
   <title>DShield Sensor Settings</title>
   <include_file>/usr/local/pkg/dshield-sensor.inc</include_file>
@@ -31,6 +31,11 @@
     <prefix>/usr/local/pkg/dshield-sensor/</prefix>
     <chmod>0755</chmod>
     <item>http://pfsense-packages.nelson-morfa.org/packages/config/dshield-sensor/pfsense_preprocessor.php</item>
+  </additional_files_needed>
+  <additional_files_needed>
+    <prefix>/usr/local/pkg/dshield-sensor/</prefix>
+    <chmod>0755</chmod>
+    <item>http://pfsense-packages.nelson-morfa.org/packages/config/dshield-sensor/cronjob</item>
   </additional_files_needed>
   <fields>
     <field>
