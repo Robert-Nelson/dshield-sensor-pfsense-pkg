@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <packagegui>
   <name>DShield Sensor</name>
-  <version>2015-03-31 pkg 0.9.0</version>
+  <version>2015-04-03 pkg 0.9.0</version>
   <title>DShield Sensor Settings</title>
   <include_file>/usr/local/pkg/dshield-sensor.inc</include_file>
   <configpath>installedpackages->package->$packagename->configuration->settings</configpath>

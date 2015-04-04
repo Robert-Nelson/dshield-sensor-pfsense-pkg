@@ -11,7 +11,10 @@
 require_once("config.inc");
 require_once("services.inc");
 
-function upnp_warn ($msg)
+global $dshield_sensor_cron_command;
+$dshield_sensor_cron_command = "/usr/bin/nice -n20 /usr/local/pkg/dshield-sensor/cronjob";
+
+function dshield_sensor_warn ($msg)
 {
 	 log_error("dshield-sensor: {$msg}");
 }
@@ -20,10 +23,10 @@ function dshield_sensor_resync_config_command()
 {
 	global $config;
 	global $input_errors;
+	global $dshield_sensor_cron_command;
 
 	$dshield_config = $config['installedpackages']['dshieldsensor']['config'][0];
 	$config_file = '/usr/pbi/dshield-sensor-'.php_uname("m").'/local/etc/dshield-sensor/dshield.cnf';
-	$cron_command = "/usr/bin/nice -n20 /usr/local/pkg/dshield-sensor/cronjob";
 
 	$configuration = "";
 	$config_size = 0;
@@ -57,7 +60,7 @@ function dshield_sensor_resync_config_command()
 	if (!empty($dshield_config['ccreport'])) {
 		$cc = $replyto;
 	}
-	$obfuscate = !empty($dshield_config['ccreport']) ? "Y" : "N";
+	$obfuscate = !empty($dshield_config['obfuscate']) ? "Y" : "N";
 
 	$patterns = array('/^userid=.*$/m', '/^cc=.*$/m', '/^replyto=.*$/m', '/^obfus=.*$/m');
 	$replacements = array('userid='.$userid, 'cc='.$cc, 'replyto='.$replyto, 'obfus='.$obfuscate);
@@ -78,9 +81,9 @@ function dshield_sensor_resync_config_command()
 		}
 		$start_minute = mt_rand(0, 59);
 
-		install_cron_job($cron_command, TRUE, $start_minute, $start_hour."-23/".$frequency);
+		install_cron_job($dshield_sensor_cron_command, TRUE, $start_minute, $start_hour."-23/".$frequency);
 	} else {
-		install_cron_job($cron_command, FALSE);
+		install_cron_job($dshield_sensor_cron_command, FALSE);
 	}
 }
 
@@ -92,6 +95,9 @@ function dshield_sensor_install_command()
 
 function dshield_sensor_deinstall_command()
 {
+	global $dshield_sensor_cron_command;
+
+	install_cron_job($dshield_sensor_cron_command, FALSE);
 }
 
 ?>
