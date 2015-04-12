@@ -70,16 +70,16 @@ function send_mail_message($message, $subject, $to, $cc, $bcc, $replyto) {
 	$smtp->debug = 0;
 	$smtp->html_debug = 0;
 	$smtp->localhost=$config['system']['hostname'].".".$config['system']['domain'];
-	
+
 	if (isset($config['notifications']['smtp']['fromaddress'])) {
 		$from = $config['notifications']['smtp']['fromaddress'];
 	} else {
 		$from = "pfsense@{$config['system']['hostname']}.{$config['system']['domain']}";
 
 	}
-	
+
 	// Use SMTP Auth if fields are filled out
-	if (isset($config['notifications']['smtp']['username']) && 
+	if (isset($config['notifications']['smtp']['username']) &&
 	   isset($config['notifications']['smtp']['password'])) {
 		if (isset($config['notifications']['smtp']['authentication_mechanism'])) {
 			$smtp->authentication_mechanism = $config['notifications']['smtp']['authentication_mechanism'];
